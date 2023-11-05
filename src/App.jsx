@@ -33,14 +33,14 @@ export default function App() {
   const [ischecked, setIschecked] = useState(false);
   const [loading, setLoading] = useState(true);
   const [txt, setTxt] = useState("");
-  const[error,setError]=useState(false);
+  const [error, setError] = useState(false);
   useEffect(() => {
     axios
       .get(`https://api.dictionaryapi.dev/api/v2/entries/en/world`)
       .then((res) => {
         setWorddetails(res.data);
         setLoading(false);
-        setError(false)
+        setError(false);
       })
       .catch((err) => {
         console.log(err);
@@ -51,21 +51,21 @@ export default function App() {
       return null;
     } else {
       setLoading(true);
-      setError(false)
+      setError(false);
       axios
         .get(`https://api.dictionaryapi.dev/api/v2/entries/en/${txt}`)
         .then((res) => {
           setWorddetails(res.data);
           setTxt("");
           setLoading(false);
-          setError(false)
+          setError(false);
         })
         .catch((err) => {
           setError(true);
-          setLoading(false)
-        setWorddetails([])
-        console.log(err)
-        setTxt('')
+          setLoading(false);
+          setWorddetails([]);
+          console.log(err);
+          setTxt("");
         });
     }
   };
@@ -90,7 +90,6 @@ export default function App() {
         >
           <Typography
             variant="h6"
-            
             onClick={() =>
               document.startViewTransition(() =>
                 setHide((prevState) => !prevState)
@@ -124,7 +123,8 @@ export default function App() {
                     key={index}
                     onClick={() => {
                       setHide((prevState) => !prevState);
-                      document.documentElement.body.style.fontFamily =fontnames[index];
+                      document.documentElement.body.style.fontFamily =
+                        fontnames[index];
                     }}
                   >
                     {fontname}
@@ -196,7 +196,6 @@ export default function App() {
           }}
         />
       ) : (
-        
         worddetails?.map((worddetail, index) => {
           const { word, phonetic, phonetics, meanings, sourceUrls } =
             worddetail;
@@ -265,7 +264,7 @@ export default function App() {
                   })}
                 </div>
               </Stack>
-              <Divider textAlign="left"variant="fullwidth">
+              <Divider textAlign="left" variant="fullwidth">
                 <Typography variant="h6">Verb</Typography>
               </Divider>
               <Typography variant="body1" sx={{ padding: 2 }}>
@@ -298,12 +297,24 @@ export default function App() {
           );
         })
       )}
-      {error&&<Stack direction="column"justifyContent="center"alignItems="center"sx={{marginBlockStart:12}}>
-        <img src={oops} style={{
-          width:mobile?100:200
-        }}alt=""/>
-        <Typography variant="body1">Please enter correct word to get the results!</Typography>
-        </Stack>}
+      {error && (
+        <div style={{
+          marginBlockStart:mobile?120:80
+        }}>
+          <img
+            src={oops}
+            style={{
+              width: mobile ? 100 : 200,
+              display:'block',
+              margin:'auto'
+            }}
+            alt=""
+          />
+          <Typography variant="body1" textAlign="center">
+            Please enter correct word to get the results!
+          </Typography>
+        </div>
+      )}
     </Container>
   );
 }
