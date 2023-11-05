@@ -8,6 +8,7 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import oops from "./assets/oops.png";
 import {
   Container,
   Stack,
@@ -32,33 +33,43 @@ export default function App() {
   const [ischecked, setIschecked] = useState(false);
   const [loading, setLoading] = useState(true);
   const [txt, setTxt] = useState("");
+  const[error,setError]=useState(false);
   useEffect(() => {
     axios
       .get(`https://api.dictionaryapi.dev/api/v2/entries/en/world`)
       .then((res) => {
         setWorddetails(res.data);
         setLoading(false);
+        setError(false)
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
   const validation = () => {
     if (txt === "") {
       return null;
     } else {
       setLoading(true);
+      setError(false)
       axios
         .get(`https://api.dictionaryapi.dev/api/v2/entries/en/${txt}`)
         .then((res) => {
           setWorddetails(res.data);
           setTxt("");
           setLoading(false);
+          setError(false)
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          setError(true);
+          setLoading(false)
+        setWorddetails([])
+        console.log(err)
+        setTxt('')
+        });
     }
   };
-useEffect(()=>{
-  document.body.style.fontFamily="Roboto"
-})
+
   return (
     <Container sx={{ width: mobile ? "100%" : "50%" }}>
       <Stack direction="row" justifyContent="space-around" alignItem="center">
@@ -185,6 +196,7 @@ useEffect(()=>{
           }}
         />
       ) : (
+        
         worddetails?.map((worddetail, index) => {
           const { word, phonetic, phonetics, meanings, sourceUrls } =
             worddetail;
@@ -286,6 +298,12 @@ useEffect(()=>{
           );
         })
       )}
+      {error&&<Stack direction="column"justifyContent="center"alignItems="center"sx={{marginBlockStart:12}}>
+        <img src={oops} style={{
+          width:mobile?100:200
+        }}alt=""/>
+        <Typography variant="body1">Please enter correct word to get the results!</Typography>
+        </Stack>}
     </Container>
   );
 }

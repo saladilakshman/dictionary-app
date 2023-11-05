@@ -27,6 +27,7 @@
   .synonyms-list {
     display: flex;
     gap: 0.2rem;
+    flex-wrap:wrap;
   }
   #li {
     list-style-type: none;
