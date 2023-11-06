@@ -28,6 +28,8 @@
     display: flex;
     gap: 0.2rem;
     flex-wrap:wrap;
+    word-break: break-all;
+    overflow-wrap: break-word;
   }
   #li {
     list-style-type: none;
@@ -36,5 +38,6 @@
   #li:not(:last-child)::after {
     content: ",";
   }
+ 
  
   

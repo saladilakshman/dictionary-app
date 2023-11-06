@@ -260,15 +260,11 @@ export default function App() {
                 spacing={1}
               >
                 <Typography variant="body1">Synonyms</Typography>
-                <div className="synonyms-list">
-                  {nounpart?.synonyms.map((synonym, index) => {
-                    return (
-                      <p key={index} id="li">
-                        {synonym}
-                      </p>
-                    );
-                  })}
-                </div>
+                <Stack direction="row"justifyContent="start"alignItems="baseline"spacing={0.2}>
+                 {nounpart.synonyms?.map((synonym,index)=>{
+                  return <Typography variant="body2"key={index} id="li">{synonym}</Typography>
+                 })}
+                 </Stack>
               </Stack>
               <Divider textAlign="left" variant="fullwidth">
                 <Typography variant="h6">Verb</Typography>
