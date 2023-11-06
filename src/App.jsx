@@ -186,19 +186,25 @@ export default function App() {
           onClick={validation}
         />
       </Stack>
+     
       {loading ? (
         <CircularProgress
           sx={{
             color: "#a84dee",
             position: "absolute",
             top: "50%",
-            left: "48%",
+            left:mobile?"45%":"48%"
           }}
         />
       ) : (
-        worddetails?.map((worddetail, index) => {
-          const { word, phonetic, phonetics, meanings, sourceUrls } =
-            worddetail;
+        worddetails?.slice(0, 1).map((worddetail, index) => {
+          const {
+            word,
+            phonetic,
+            phonetics,
+            meanings,
+            sourceUrls
+          } = worddetail;
           const [nounpart, verbpart] = meanings;
           return (
             <Stack key={index} sx={{ marginBlockStart: 4 }}>
@@ -212,7 +218,7 @@ export default function App() {
                   <Typography
                     variant="h6"
                     sx={{
-                      color: "#8e0cf1",
+                      color: "#8e0cf1"
                     }}
                   >
                     {phonetic}
@@ -239,7 +245,7 @@ export default function App() {
                   <ul key={index}>
                     <li
                       style={{
-                        color: ischecked ? "#f5f5f5" : theme.palette.grey[800],
+                        color: ischecked ? "#f5f5f5" : theme.palette.grey[800]
                       }}
                     >
                       {noundetails.definition}
@@ -275,7 +281,7 @@ export default function App() {
                   <ul key={index}>
                     <li
                       style={{
-                        color: ischecked ? "#f5f5f5" : theme.palette.grey[800],
+                        color: ischecked ? "#f5f5f5" : theme.palette.grey[800]
                       }}
                     >
                       {noundetails.definition}
@@ -298,15 +304,17 @@ export default function App() {
         })
       )}
       {error && (
-        <div style={{
-          marginBlockStart:mobile?120:80
-        }}>
+        <div
+          style={{
+            marginBlockStart:mobile?"50%":'25%'
+          }}
+        >
           <img
             src={oops}
             style={{
               width: mobile ? 100 : 200,
-              display:'block',
-              margin:'auto'
+              display: "block",
+              margin: "auto"
             }}
             alt=""
           />
@@ -315,6 +323,7 @@ export default function App() {
           </Typography>
         </div>
       )}
+   
     </Container>
   );
 }
