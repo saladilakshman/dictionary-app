@@ -21,6 +21,9 @@ import {
   IconButton,
   Divider,
   Link,
+  createTheme,
+  ThemeProvider,
+  CssBaseline
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import axios from "axios";
@@ -34,6 +37,11 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [txt, setTxt] = useState("");
   const [error, setError] = useState(false);
+  const dark_theme=createTheme({
+    palette:{
+      mode:ischecked?'dark':'light'
+    }
+  })
   useEffect(() => {
     axios
       .get(`https://api.dictionaryapi.dev/api/v2/entries/en/world`)
@@ -71,6 +79,8 @@ export default function App() {
   };
 
   return (
+    <ThemeProvider theme={dark_theme}>
+      <CssBaseline/>
     <Container sx={{ width: mobile ? "100%" : "50%" }}>
       <Stack direction="row" justifyContent="space-around" alignItem="center">
         <LiaBookSolid
@@ -143,18 +153,7 @@ export default function App() {
             <Switch
               color="secondary"
               checked={ischecked}
-              onChange={() => {
-                document.startViewTransition(() => {
-                  setIschecked((prevState) => !prevState);
-                  if (ischecked) {
-                    document.body.style.backgroundColor = "white";
-                    document.body.style.color = "#252525";
-                  } else {
-                    document.body.style.backgroundColor = "#252525";
-                    document.body.style.color = "white";
-                  }
-                });
-              }}
+              onChange={()=>setIschecked(prevState=>!prevState)}
             />
             <DarkModeOutlinedIcon
               sx={{
@@ -321,5 +320,6 @@ export default function App() {
       )}
    
     </Container>
+    </ThemeProvider>
   );
 }
